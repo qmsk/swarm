@@ -3,13 +3,12 @@
 package api
 
 import (
-	"crypto/tls"
 	"net"
 	"os"
 	"syscall"
 )
 
-func newUnixListener(addr string, tlsConfig *tls.Config) (net.Listener, error) {
+func newUnixListener(addr string) (net.Listener, error) {
 	if err := syscall.Unlink(addr); err != nil && !os.IsNotExist(err) {
 		return nil, err
 	}
@@ -22,7 +21,7 @@ func newUnixListener(addr string, tlsConfig *tls.Config) (net.Listener, error) {
 	mask := syscall.Umask(0777)
 	defer syscall.Umask(mask)
 
-	l, err := newListener("unix", addr, tlsConfig)
+	l, err := newListener("unix", addr, nil)
 	if err != nil {
 		return nil, err
 	}

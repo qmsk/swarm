@@ -98,7 +98,7 @@ func (s *Server) ListenAndServe() error {
 
 			switch protoAddrParts[0] {
 			case "unix":
-				l, err = newUnixListener(protoAddrParts[1], s.tlsConfig)
+				l, err = newUnixListener(protoAddrParts[1])
 			case "tcp":
 				l, err = newListener("tcp", protoAddrParts[1], s.tlsConfig)
 			default:
